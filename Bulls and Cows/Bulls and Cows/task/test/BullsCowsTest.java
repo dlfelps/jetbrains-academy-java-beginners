@@ -1,158 +1,95 @@
 import bullscows.Main;
+import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
 import org.hyperskill.hstest.stage.StageTest;
 import org.hyperskill.hstest.testcase.CheckResult;
-import org.hyperskill.hstest.testcase.TestCase;
 import org.hyperskill.hstest.testing.TestedProgram;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.hyperskill.hstest.testing.expect.Expectation.expect;
 
 public class BullsCowsTest extends StageTest<String> {
 
-    @Override
-    public List<TestCase<String>> generate() {
-        return Arrays.asList(
-                new TestCase<String>().setDynamicTesting(this::test1),
-                new TestCase<String>().setDynamicTesting(this::test2),
-                new TestCase<String>().setDynamicTesting(this::test3));
-    }
-
-    String secretNumber;
-
-    // base test
+    // basic test case
+    @DynamicTestingMethod
     CheckResult test1() {
         TestedProgram main = new TestedProgram();
         main.start();
-        String input = "3601";
-        String output = main.execute(input);
-        return solver(input, output);
+        String output = main.execute("4").toLowerCase().trim();
+
+        return outputCheck(output, 4);
     }
 
-    // test with 4 bulls
+    @DynamicTestingMethod
     CheckResult test2() {
         TestedProgram main = new TestedProgram();
         main.start();
-        String output = main.execute(secretNumber);
+        String output = main.execute("1").toLowerCase().trim();
 
-        return solver(secretNumber, output);
+        return outputCheck(output, 1);
     }
 
-    // test of None result
-    CheckResult test3() {
+    // test of incorrect input
+    @DynamicTestingMethod
+    CheckResult test4() {
         TestedProgram main = new TestedProgram();
         main.start();
-        List<Integer> source = stringToArrayOfNumbers("1234567890");
-        List<Integer> secretNumberList = stringToArrayOfNumbers(secretNumber);
-        source.removeAll(secretNumberList);
-        String input = source.stream().map(String::valueOf).collect(Collectors.joining()).substring(0, 4);
-        String output = main.execute(input);
-        return solver(input, output);
+        String output = main.execute("11").toLowerCase().trim();
+
+        return outputCheck(output, 11);
     }
 
-    CheckResult solver(String input, String output) {
+    @DynamicTestingMethod
+    CheckResult test5() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        String output = main.execute("6").toLowerCase().trim();
 
-        if (!findPairsOfBullsAndCows(output)) {
-            return CheckResult.wrong(
-                    "The testing system didn't find a pairs of " +
-                            "bulls and cows or None in your program's output.");
+        return outputCheck(output, 6);
+    }
+
+    @DynamicTestingMethod
+    CheckResult test6() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        String output = main.execute("3").toLowerCase().trim();
+
+        return outputCheck(output, 3);
+    }
+
+
+    CheckResult outputCheck(String source, int length) {
+
+        if (length > 10) {
+            if (source.toLowerCase().contains("error")) {
+                return CheckResult.correct();
+            } else {
+                return CheckResult.wrong("An error message expected with input " +
+                        "\"" + length + "\"");
+            }
         }
 
-        Matcher matcher = getFourDigitsMatcher(output);
-        if (!findFourDigitsWithRegExp(matcher)) {
-            return CheckResult.wrong(
-                    "The testing system didn't find a \"secret\" " +
-                            "number in your program's output.");
+        List<Integer> integers = expect(source).toContain(1).integers();
+        source = "" + integers.get(0);
+
+        if (source.length() != length) {
+            return CheckResult.wrong("The output number of your program has " +
+                    "an incorrect length (found " + source.length() + ")");
         }
 
-        secretNumber = getFourDigits(matcher);
-        if (secretNumber.equals("9305")) {
-            System.out.println("Why 9305? Make your own secret number :)");
-        }
+        List<Integer> temp = stringToArrayOfNumbers(source);
+        temp = new ArrayList<>(new LinkedHashSet<>(temp));
 
-        int[] correctAnswer = grader(input, secretNumber);
-        int[] receivedAnswers = getNumOfBullsAndCows(output);
-
-        if (correctAnswer[0] != receivedAnswers[0]) {
-            return CheckResult.wrong("The number of Bulls is incorrect.");
-        }
-
-        if (correctAnswer[1] != receivedAnswers[1]) {
-            return CheckResult.wrong("The number of Cows is incorrect.");
+        if (temp.toArray().length != source.length()) {
+            return CheckResult.wrong("Digits in the generated number are not unique.");
         }
 
         return CheckResult.correct();
     }
-
-    Matcher getFourDigitsMatcher(String userString) {
-        Pattern fourDigitsPattern = Pattern.compile("\\b\\d{4}\\b");
-        return fourDigitsPattern.matcher(userString);
-    }
-
-    boolean findFourDigitsWithRegExp(Matcher matcher) {
-        return matcher.find();
-    }
-
-    String getFourDigits(Matcher matcher) {
-        return matcher.group();
-    }
-
-    boolean findPairsOfBullsAndCows(String userString) {
-        Pattern pairPattern = Pattern.compile("(\\b\\d ([cC]ow|[bB]ull))|[nN]one\\b");
-        Matcher pairMatcher = pairPattern.matcher(userString);
-        return pairMatcher.find();
-    }
-
-
-    // get number of bulls and cows from user program's output
-    int[] getNumOfBullsAndCows(String userString) {
-        Matcher nonePattern = Pattern.compile("\\b[nN]one\\b").matcher(userString);
-        Matcher cowsPattern = Pattern.compile("\\b\\d [cC]ow").matcher(userString);
-        Matcher bullsPattern = Pattern.compile("\\b\\d [bB]ull").matcher(userString);
-        Pattern oneNumPattern = Pattern.compile("\\d");
-
-        if (nonePattern.find()) {
-            return new int[]{0, 0};
-        }
-
-        int[] ans = {0, 0};
-
-        if (bullsPattern.find()) {
-            String temp = bullsPattern.group();
-            Matcher oneNumBulls = oneNumPattern.matcher(temp);
-            oneNumBulls.find();
-            ans[0] = Integer.parseInt(oneNumBulls.group());
-        }
-        if (cowsPattern.find()) {
-            String temp = cowsPattern.group();
-            Matcher oneNumCows = oneNumPattern.matcher(temp);
-            oneNumCows.find();
-            ans[1] = Integer.parseInt(oneNumCows.group());
-        }
-
-        return ans;
-    }
-
-    // reference grader
-    int[] grader(String grade, String guess) {
-        int bulls = 0;
-        List<Integer> gradeNumbers = stringToArrayOfNumbers(grade);
-        List<Integer> guessNumbers = stringToArrayOfNumbers(guess);
-
-        for (int i = 0; i < gradeNumbers.size(); i++) {
-            if (gradeNumbers.get(i).equals(guessNumbers.get(i))) {
-                bulls++;
-            }
-        }
-
-        gradeNumbers.retainAll(guessNumbers);
-        int cows = gradeNumbers.size() - bulls;
-
-        return new int[]{bulls, cows};
-    }
-
 
     private static List<Integer> stringToArrayOfNumbers(String array) {
         return Arrays.stream(array.split(""))
