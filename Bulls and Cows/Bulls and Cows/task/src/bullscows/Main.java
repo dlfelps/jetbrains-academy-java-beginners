@@ -7,6 +7,19 @@ class GenerateCode {
     String fullCode;
 
     private GenerateCode(int codeLength, int numSymbols) {
+
+        if ((codeLength < 1) | (numSymbols < 1)){
+            throw new IllegalArgumentException();
+        }
+
+        if ((codeLength > 36) | (numSymbols > 36)) {
+            throw new IllegalArgumentException();
+        }
+
+        if (codeLength > numSymbols) {
+            throw new IllegalArgumentException();
+        }
+
         String s = "123456789abcdefghijklmnopqrstuvwxyz".substring(0,numSymbols-1);
         if (numSymbols < 11) {
             System.out.println(String.format("The secret is prepared: %s (0-%s).", "*".repeat(codeLength), s.subSequence(s.length()-1, s.length())));
@@ -39,8 +52,23 @@ class GenerateCode {
     }
 
     public static String using(int codeLength, int numSymbols) {
-        var it = new GenerateCode(codeLength, numSymbols);
-        return it.fullCode.substring(0,codeLength);
+
+        GenerateCode it = null;
+        String codeString = "";
+
+        try {
+            it = new GenerateCode(codeLength, numSymbols);
+            codeString = it.fullCode.substring(0,codeLength);
+        } catch (IllegalArgumentException e) {
+            if (codeLength > 36) {
+                System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            } else {
+                System.out.println(String.format("Error: it's not possible to generate a code with a length of %d with %d unique symbols.", codeLength, numSymbols));
+            }
+            System.exit(0);
+        }
+
+        return codeString;
     }
 
 }
@@ -112,16 +140,33 @@ class BullsCows {
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Input the length of the secret code:");
+        int codeLength = 0;
+        int numSymbols = 0;
 
         Scanner scanner = new Scanner(System.in);
-        int codeLength = scanner.nextInt();
+        String userInput = "";
+        try {
+            System.out.println("Input the length of the secret code:");
+            userInput = scanner.next();
+            codeLength = Integer.parseInt(userInput);
+        } catch (NumberFormatException e){
+            System.out.println(String.format("Error: \"%s\" isn't a valid number.", userInput ));
+            System.exit(0);
+        }
 
-        System.out.println("Input the number of possible symbols in the code:");
-        int numSymbols = scanner.nextInt();
+        try {
+            System.out.println("Input the number of possible symbols in the code:");
+            userInput = scanner.next();
+            numSymbols = Integer.parseInt(userInput);
+        } catch (NumberFormatException e){
+            System.out.println(String.format("Error: \"%s\" isn't a valid number.", userInput ));
+            System.exit(0);
+        }
+
 
         var game = BullsCows.from(GenerateCode.using(codeLength, numSymbols));
 
+        System.out.println("Okay, let's start a game!");
         boolean isGuessCorrect = false;
         int round = 1;
 
