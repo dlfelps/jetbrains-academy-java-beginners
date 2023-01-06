@@ -99,6 +99,22 @@ public class BullsCowsTest extends StageTest<String> {
         return CheckResult.correct();
     }
 
+    // length limit check
+    @DynamicTestingMethod
+    CheckResult test4() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        String output = main.execute("11");
+        output = main.execute("10");
+
+        if (output.toLowerCase().contains("error")) {
+            return CheckResult.correct();
+        } else {
+            return CheckResult.wrong("The testing system waited for a error message " +
+                    "(the message should contain a word \"error\").");
+        }
+    }
+
     // this stage test
     @DynamicTestingMethod
     CheckResult test5() {
@@ -110,6 +126,7 @@ public class BullsCowsTest extends StageTest<String> {
 
         Character[] usedSymbols = getUsedSymbols(main, 4);
         boolean check = getPermutations(main, 4, usedSymbols);
+
         if (!check && main.isFinished()) {
             return CheckResult.wrong("The program has finished before the answer was found. " +
                     "It means that your game was broken (we used length 4 and 16 symbols).");
@@ -135,6 +152,7 @@ public class BullsCowsTest extends StageTest<String> {
 
         Character[] usedSymbols = getUsedSymbols(main, 6);
         boolean check = getPermutations(main, 6, usedSymbols);
+
         if (!check && main.isFinished()) {
             return CheckResult.wrong("The program has finished before the answer was found. " +
                     "It means that your game was broken (we used length 6 and 36 symbols).");
@@ -147,6 +165,86 @@ public class BullsCowsTest extends StageTest<String> {
 
         return CheckResult.correct();
     }
+
+    // tested incorrect word's length
+    @DynamicTestingMethod
+    CheckResult test7() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        String output = main.execute("0");
+
+        if (!main.isFinished()) {
+            output = main.execute("1");
+        }
+
+        if (!main.isFinished()) {
+            return CheckResult.wrong("The program continued work after an incorrect input.");
+        }
+
+        if (!output.toLowerCase().contains("error")) {
+            return CheckResult.wrong("The testing system waited for a error message " +
+                    "(the message should contain a word \"error\").");
+        }
+
+        return CheckResult.correct();
+    }
+
+    // the dictionary is less than word's length
+    @DynamicTestingMethod
+    CheckResult test8() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        main.execute("10");
+        main.execute("9");
+
+        if (!main.isFinished()) {
+            return CheckResult.wrong("The program continued work after an incorrect input.");
+        }
+
+        return CheckResult.correct();
+    }
+
+    // test of dictionary's limit
+    @DynamicTestingMethod
+    CheckResult test9() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        String output;
+        main.execute("9");
+        output = main.execute("37");
+
+        if (!main.isFinished()) {
+            return CheckResult.wrong("The program continued work after an incorrect input.");
+        }
+
+        if (!output.toLowerCase().contains("error")) {
+            return CheckResult.wrong("The testing system waited for a error message " +
+                    "(the message should contain a word \"error\").");
+        }
+
+        return CheckResult.correct();
+    }
+
+    // test of words input
+    @DynamicTestingMethod
+    CheckResult test10() {
+        TestedProgram main = new TestedProgram();
+        main.start();
+        String output;
+        output = main.execute("abcdefg 1 -6");
+
+        if (!main.isFinished()) {
+            return CheckResult.wrong("The program continued work after an incorrect input.");
+        }
+
+        if (!output.toLowerCase().contains("error")) {
+            return CheckResult.wrong("The testing system waited for a error message " +
+                    "(the message should contain a word \"error\").");
+        }
+
+        return CheckResult.correct();
+    }
+
 
     void secretCheck(String output, int length, int dictLen) {
         String secret = new String(new char[length]).replace('\0', '*');
@@ -198,6 +296,7 @@ public class BullsCowsTest extends StageTest<String> {
             if (result[0] == 1) {
                 symbols[index++] = c;
             }
+
             if (index == length) {
                 break;
             }

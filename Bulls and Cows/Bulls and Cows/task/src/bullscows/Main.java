@@ -1,40 +1,45 @@
 package bullscows;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.List;
+import java.util.*;
 
 class GenerateCode {
 
     String fullCode;
 
-    private GenerateCode() {
-        var candidates = new ArrayList<String>();
-        candidates.addAll(List.of("1","2","3","4","5", "6", "7", "8", "9"));
+    private GenerateCode(int codeLength, int numSymbols) {
+        String s = "123456789abcdefghijklmnopqrstuvwxyz".substring(0,numSymbols-1);
+        if (numSymbols < 11) {
+            System.out.println(String.format("The secret is prepared: %s (0-%s).", "*".repeat(codeLength), s.subSequence(s.length()-1, s.length())));
+        } else {
+            System.out.println(String.format("The secret is prepared: %s (0-9, a-%s).", "*".repeat(codeLength), s.subSequence(s.length()-1, s.length())));
+        }
 
-        var s = new StringBuilder();
+        var temp = Arrays.stream(s.split("")).toList();
+        var candidates = new ArrayList<String>();
+        candidates.addAll(temp);
+
+        var sb = new StringBuilder();
 
         // get first nonzero
         int rnd = new Random().nextInt(candidates.size());
-        s.append(candidates.get(rnd));
+        sb.append(candidates.get(rnd));
         candidates.remove(rnd);
 
         // add 0 back to candidate pool for remaining choices
         candidates.add("0");
 
         //get the remaining digits
-        for (int i = 0; i < 9; i++) {
+        for (int i = 1; i < numSymbols; i++) {
             rnd = new Random().nextInt(candidates.size() );
-            s.append(candidates.get(rnd));
+            sb.append(candidates.get(rnd));
             candidates.remove(rnd);
         }
 
-        fullCode = s.toString();
+        fullCode = sb.toString();
     }
 
-    public static String withLength(int codeLength) {
-        var it = new GenerateCode();
+    public static String using(int codeLength, int numSymbols) {
+        var it = new GenerateCode(codeLength, numSymbols);
         return it.fullCode.substring(0,codeLength);
     }
 
@@ -107,27 +112,27 @@ class BullsCows {
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Please enter the secret code's length:");
+        System.out.println("Input the length of the secret code:");
 
         Scanner scanner = new Scanner(System.in);
         int codeLength = scanner.nextInt();
 
-        if (codeLength < 11) {
-            var game = BullsCows.from(GenerateCode.withLength(codeLength));
+        System.out.println("Input the number of possible symbols in the code:");
+        int numSymbols = scanner.nextInt();
 
-            boolean isGuessCorrect = false;
-            int round = 1;
+        var game = BullsCows.from(GenerateCode.using(codeLength, numSymbols));
 
-            while (!isGuessCorrect) {
-                System.out.println(String.format("Turn %d",round));
-                isGuessCorrect = game.playRound();
-                round++;
-            }
+        boolean isGuessCorrect = false;
+        int round = 1;
 
-            System.out.println("Congratulations! You guessed the secret code.");
-        } else {
-            System.out.println(String.format("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.", codeLength));
+        while (!isGuessCorrect) {
+            System.out.println(String.format("Turn %d",round));
+            isGuessCorrect = game.playRound();
+            round++;
         }
+
+        System.out.println("Congratulations! You guessed the secret code.");
+
 
     }
 
