@@ -282,9 +282,18 @@ files:
 
     }
   learner_created: false
-- name: src/battleship/GameBoard.java
+- name: src/battleship/Battleship.java
+  visible: true
+  learner_created: true
+- name: src/battleship/State.java
+  visible: true
+  learner_created: true
+- name: src/battleship/Coordinates.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/125/stages/663/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 11 Jan 2023 21:06:14 UTC"
+record: 1

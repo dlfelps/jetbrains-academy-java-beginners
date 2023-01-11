@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="85021e79-6c91-4243-b026-1d531e2463ad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Battleship/task/src/battleship/Battleship.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Battleship/task/src/battleship/Coordinates.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Battleship/task/src/battleship/State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageData" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageRecordIndex" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageRecordIndex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/Fog of war/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/Fog of war/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/Friend or foe/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/Friend or foe/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/Take position/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/Take position/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/The end of the war/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/The end of the war/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/The first shot/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/The first shot/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/lesson-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/lesson-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/task/src/battleship/GameBoard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/task/src/battleship/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/task/src/battleship/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/task/test/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/task/test/Tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-remote-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/course-remote-info.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2KBVSWDrCKkCkQBjYem6oe5fcDQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Edu.Yaml.Migrate": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="85021e79-6c91-4243-b026-1d531e2463ad" name="Changes" comment="" />
+      <created>1673447965373</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673447965373</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
