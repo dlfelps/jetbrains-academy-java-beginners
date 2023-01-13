@@ -5,38 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85021e79-6c91-4243-b026-1d531e2463ad" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Balance management/Battleship.Topics-Fields_and_methods_in_enum-Balance_management.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Balance management/Battleship.Topics-Fields_and_methods_in_enum-Balance_management.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Balance management/Battleship.Topics-Fields_and_methods_in_enum-Balance_management.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Elements of enum/Battleship.Topics-Fields_and_methods_in_enum-Elements_of_enum.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Elements of enum/Battleship.Topics-Fields_and_methods_in_enum-Elements_of_enum.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Elements of enum/Battleship.Topics-Fields_and_methods_in_enum-Elements_of_enum.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Planets of the solar system/Battleship.Topics-Fields_and_methods_in_enum-Planets_of_the_solar_system.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Planets of the solar system/Battleship.Topics-Fields_and_methods_in_enum-Planets_of_the_solar_system.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Planets of the solar system/Battleship.Topics-Fields_and_methods_in_enum-Planets_of_the_solar_system.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/System of units/Battleship.Topics-Fields_and_methods_in_enum-System_of_units.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/System of units/Battleship.Topics-Fields_and_methods_in_enum-System_of_units.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/System of units/Battleship.Topics-Fields_and_methods_in_enum-System_of_units.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Theory/Battleship.Topics-Fields_and_methods_in_enum-Theory.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Theory/Battleship.Topics-Fields_and_methods_in_enum-Theory.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Topics/Fields and methods in enum/Theory/Battleship.Topics-Fields_and_methods_in_enum-Theory.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/c/3c5993dd5b36fc523b6f79449e0f9388852de79a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/8/88383c13e5351abd539884d57771207093a98fda" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/d/8df397fd2cbc394fc88499c0eb2126c0669aa8cf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Battleship/Fog of war/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/Fog of war/task-info.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Battleship/Friend or foe/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/Friend or foe/task-info.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Battleship/Take position/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/Take position/task-info.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Battleship/The end of the war/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/The end of the war/task-info.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Battleship/The first shot/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/The first shot/task-info.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Battleship/lesson-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/lesson-info.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Battleship/task/src/battleship/Battleship.java" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/task/src/battleship/Battleship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Battleship/task/test/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/task/test/Tests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/course-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/course-info.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/course-remote-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/course-remote-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleship/task/src/battleship/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Battleship/task/src/battleship/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
