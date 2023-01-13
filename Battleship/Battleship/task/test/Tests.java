@@ -71,17 +71,8 @@ public class Tests extends StageTest<String> {
 
         output = main.execute("E6 D6").trim();
         if (isGameFieldPrinted(output)) {
-            return CheckResult.wrong(
-                "Your program should not print a game field " +
-                    "if there is an input mistake. " +
+            return CheckResult.wrong("Your program should not print a game field if there is an input mistake. " +
                 "(Too close to another ship)");
-        }
-
-        if (!output.toLowerCase().contains("error")) {
-            return CheckResult.wrong(
-                "Your program should report an error " +
-                    "if there is an input mistake. " +
-                    "(Too close to another ship)");
         }
 
         output = main.execute("I2 J2").trim();
@@ -93,8 +84,31 @@ public class Tests extends StageTest<String> {
                 "\"The game starts!\"");
         }
 
+        String[] temp = output.split("starts");
+        if (temp.length < 2) {
+            return CheckResult.wrong("After printing \"The game starts!\" you should print an empty battle field!");
+        }
+        output = temp[1];
+
+        if (!matrixIsEmpty(getFieldMatrix(output))) {
+            return CheckResult.wrong("After the game starts you should print an empty battle field!");
+        }
+
         output = main.execute("A1");
-        checkShot(getFieldMatrix(output), "A1", output);
+        if (!output.contains("hit") || !output.contains("ship")) {
+            return CheckResult.wrong("After hitting a ship you should print \"You hit a ship!\".");
+        }
+
+        matrix = getFieldMatrix(output);
+        checkShot(matrix, "A1", output);
+
+        String[] splittedOutput = output.split("ship");
+        if (splittedOutput.length < 2) {
+            return CheckResult.wrong("Two game fields were expected in the output.");
+        }
+
+        matrix = getFieldMatrix(splittedOutput[1]);
+        findAllShips(matrix, new String[]{"A1 D1", "B9 D9", "F3 F7", "I2 J2", "J8 J10"});
 
         return CheckResult.correct();
     }
@@ -125,17 +139,8 @@ public class Tests extends StageTest<String> {
 
         output = main.execute("C8 B8");
         if (isGameFieldPrinted(output)) {
-            return CheckResult.wrong(
-                "Your program should not print a game field " +
-                    "if there is an input mistake. " +
+            return CheckResult.wrong("Your program should not print a game field if there is an input mistake. " +
                 "(Incorrect length of the ship)");
-        }
-
-        if (!output.toLowerCase().contains("error")) {
-            return CheckResult.wrong(
-                "Your program should report an error " +
-                    "if there is an input mistake. " +
-                    "(Incorrect length of the ship)");
         }
 
         output = main.execute("C8 F8").trim();
@@ -149,10 +154,8 @@ public class Tests extends StageTest<String> {
         }
 
         output = main.execute("A1 C2").trim();
-        if (isGameFieldPrinted(output) || !output.toLowerCase().contains("error")) {
-            return CheckResult.wrong(
-                "Your program should not print a game field " +
-                    "if there is an input mistake.");
+        if (isGameFieldPrinted(output)) {
+            return CheckResult.wrong("Your program should not print a game field if there is an input mistake.");
         }
 
         output = main.execute("A1 C1").trim();
@@ -177,9 +180,7 @@ public class Tests extends StageTest<String> {
 
         output = main.execute("G2 E2").trim();
         if (isGameFieldPrinted(output)) {
-            return CheckResult.wrong(
-                "Your program should not print a game field " +
-                    "if there is an input mistake. " +
+            return CheckResult.wrong("Your program should not print a game field if there is an input mistake. " +
                 "(Too close to another ship)");
         }
 
@@ -192,22 +193,39 @@ public class Tests extends StageTest<String> {
                 "\"The game starts!\"");
         }
 
+        String[] temp = output.split("starts");
+        if (temp.length < 2) {
+            return CheckResult.wrong("After printing \"The game starts!\" you should print an empty battle field!");
+        }
+        output = temp[1];
+
+        if (!matrixIsEmpty(getFieldMatrix(output))) {
+            return CheckResult.wrong("After the game starts you should print an empty battle field!");
+        }
+
         output = main.execute("M1");
         if (isGameFieldPrinted(output)) {
-            return CheckResult.wrong(
-                "Your program should not print a game field " +
-                    "if there is an input mistake.");
+            return CheckResult.wrong("Your program should not print a game field if there is an input mistake.");
         }
 
         output = main.execute("A11");
         if (isGameFieldPrinted(output)) {
-            return CheckResult.wrong(
-                "Your program should not print a game field " +
-                    "if there is an input mistake.");
+            return CheckResult.wrong("Your program should not print a game field if there is an input mistake.");
         }
 
         output = main.execute("E4");
-        checkMissing(getFieldMatrix(output), "E4", output);
+        if (!output.toLowerCase().contains("missed")) {
+            return CheckResult.wrong("After missing a ship you should print \"You missed!\".");
+        }
+
+        String[] splittedOutput = output.split("missed");
+        if (splittedOutput.length < 2) {
+            return CheckResult.wrong("Two game field were expected in the output.");
+        }
+
+        matrix = getFieldMatrix(splittedOutput[1]);
+        checkMissing(matrix, "E4", output);
+        findAllShips(matrix, new String[]{"J3 J7", "C8 F8", "A1 C1", "H1 H3", "B5 C5"});
 
         return CheckResult.correct();
     }
@@ -294,6 +312,18 @@ public class Tests extends StageTest<String> {
         output = main.execute("E8");
         checkShot(getFieldMatrix(output), "E8", output);
 
+        if (!output.contains("hit") || !output.contains("ship")) {
+            return CheckResult.wrong("After hitting a ship you should print \"You hit a ship!\".");
+        }
+
+        String[] splittedOutput = output.split("ship");
+        if (splittedOutput.length != 2) {
+            return CheckResult.wrong("Two game field were expected in the output. No one was found");
+        }
+
+        matrix = getFieldMatrix(splittedOutput[1]);
+        findAllShips(matrix, new String[]{"J3 J7", "C8 F8", "A1 C1", "H1 H3", "E5 F5"});
+
         return CheckResult.correct();
     }
 
@@ -328,6 +358,17 @@ public class Tests extends StageTest<String> {
         }
     }
 
+    boolean matrixIsEmpty(String[][] matrix) {
+        for (String[] strings : matrix) {
+            for (int j = 0; j < matrix.length; j++) {
+                if (!strings[j].trim().equals("~")) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     void checkShot(String[][] matrix, String coordinate, String output) {
         int[] parsedCoordinate = new int[2];
         parsedCoordinate[0] = charToInt(coordinate.toLowerCase().substring(0, 1));
@@ -359,7 +400,7 @@ public class Tests extends StageTest<String> {
         if (!output.toLowerCase().contains("missed")) {
             throw new WrongAnswer(
                 "Your program reacted unpredictably to a miss.\n" +
-                "You should print \"You missed!\".");
+                    "You should print \"You missed!\".");
         }
 
         if (output.toLowerCase().contains("hit")) {
@@ -430,5 +471,11 @@ public class Tests extends StageTest<String> {
 
     boolean isGameFieldPrinted(String output) {
         return output.contains("1") && output.contains("2") && output.contains("10");
+    }
+
+    void findAllShips(String[][] matrix, String[] coordinates) {
+        for (String item : coordinates) {
+            findShipByCoordinates(matrix, item);
+        }
     }
 }

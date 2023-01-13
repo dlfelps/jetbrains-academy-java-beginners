@@ -7,7 +7,9 @@ public enum State {
     CRUISER,
     DESTROYER,
     OPEN,
-    ADJACENT;
+    ADJACENT,
+    HIT,
+    MISS;
 
     @Override
     public String toString(){
@@ -19,6 +21,8 @@ public enum State {
             case DESTROYER -> "Destroyer";
             case OPEN -> "Open";
             case ADJACENT -> "Adjacent";
+            case HIT -> "Hit";
+            case MISS -> "Miss";
         };
     }
 }

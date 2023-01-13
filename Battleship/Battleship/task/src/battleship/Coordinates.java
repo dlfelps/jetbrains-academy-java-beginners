@@ -20,7 +20,7 @@ record Coordinates(int col, int row) {
             case 'H' -> 8;
             case 'I' -> 9;
             case 'J' -> 10;
-            default -> throw new IllegalArgumentException("Error: Wrong ship location! Try again:");
+            default -> throw new IllegalArgumentException("Error! You entered the wrong coordinates! Try again:");
         };
 
         int col;

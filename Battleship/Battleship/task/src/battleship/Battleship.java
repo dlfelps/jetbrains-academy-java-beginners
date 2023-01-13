@@ -55,6 +55,8 @@ public class Battleship {
                 switch (getState(new Coordinates(col, row))) {
                     case OPEN, ADJACENT -> System.out.print(" ~");
                     case BATTLESHIP, CARRIER, CRUISER, DESTROYER, SUBMARINE  -> System.out.print(" O");
+                    case HIT -> System.out.print(" X");
+                    case MISS -> System.out.print(" M");
                 }
             }
             System.out.println();
@@ -70,7 +72,7 @@ public class Battleship {
         addShip(DESTROYER,2);
     }
 
-    public void addShip(State ship, int shipLength) {
+    private void addShip(State ship, int shipLength) {
         Optional<HashMap<Coordinates, State>> boardWithShip = Optional.empty();
         while (boardWithShip.isEmpty()) {
             boardWithShip = tryPlaceShip(ship, shipLength);
@@ -93,7 +95,7 @@ public class Battleship {
             var stop = Coordinates.fromString(temp[1]);
             var shipSpan = start.spans(stop);
             if (start.distanceTo(stop) != shipLength) {
-                throw new IllegalArgumentException("Error! Ship wrong length! Try again:");
+                throw new IllegalArgumentException(String.format("Error! Wrong length of the %s! Try again:", shipType));
             }
             // ensure all spots are open
             var shipSurround = shipSpan.stream()
@@ -111,12 +113,57 @@ public class Battleship {
                 shipSpan.forEach(coord -> updatedGame.updateBoard(coord, shipType));
                 newBoard = Optional.of(updatedGame.board);
             } else {
-                System.out.println(shipSurround);
-                throw new IllegalArgumentException("Error! Invalid location requested (too close to another ship perhaps?) Try again:");
+                throw new IllegalArgumentException("Error! You placed it too close to another one. Try again:");
             }
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
         return newBoard;
     }
+
+    public void play() {
+        System.out.println("The game starts!");
+        printBoard();
+        takeShot();
+    }
+    private void takeShot() {
+        Optional<HashMap<Coordinates, State>> boardWithShot = Optional.empty();
+        while (boardWithShot.isEmpty()) {
+            boardWithShot = tryTakeShot();
+        }
+        //successful placement
+        board = boardWithShot.get();//gets the value from optional
+    }
+    private Optional<HashMap<Coordinates, State>>  tryTakeShot() {
+
+        Optional<HashMap<Coordinates,State>> newBoard = Optional.empty();
+
+        System.out.println("Take a shot!");
+        try {
+            var scanner = new Scanner(System.in);
+            var missile = Coordinates.fromString(scanner.next());
+            State result = launch(missile);
+            var updatedGame = new Battleship(board);
+            updatedGame.updateBoard(missile, result);
+            newBoard = Optional.of(updatedGame.board);
+            updatedGame.printBoard();
+            switch (result) {
+                case HIT -> System.out.println("You hit a ship!");
+                case MISS -> System.out.println("You missed!");
+            }
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+
+        return newBoard;
+    }
+
+    private State launch(Coordinates missile) {
+        var newState = switch(getState(missile)) {
+            case MISS, OPEN, ADJACENT -> MISS;
+            case HIT, CARRIER, CRUISER, DESTROYER, SUBMARINE, BATTLESHIP -> HIT;
+        };
+        return newState;
+    }
 }
+

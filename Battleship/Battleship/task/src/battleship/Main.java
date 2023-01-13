@@ -8,6 +8,7 @@ public class Main {
         var board = Battleship.empty();
         board.printBoard();
         board.setupBoard();
-//        board.addShip(CRUISER,3);
+        board.play();
+
     }
 }
