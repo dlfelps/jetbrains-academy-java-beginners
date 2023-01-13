@@ -33,7 +33,7 @@ public class Battleship {
         return board.getOrDefault(c, OPEN);
     }
 
-    public void printBoard() {
+    public void printTrueState() {
 
         System.out.println("  1 2 3 4 5 6 7 8 9 10");
 
@@ -63,6 +63,36 @@ public class Battleship {
         }
     }
 
+    public void printFoggyState() {
+
+        System.out.println("  1 2 3 4 5 6 7 8 9 10");
+
+        for (int row = 1; row < 11; row++) {
+            switch (row){
+                case 1 -> System.out.print("A");
+                case 2 -> System.out.print("B");
+                case 3 -> System.out.print("C");
+                case 4 -> System.out.print("D");
+                case 5 -> System.out.print("E");
+                case 6 -> System.out.print("F");
+                case 7 -> System.out.print("G");
+                case 8 -> System.out.print("H");
+                case 9 -> System.out.print("I");
+                case 10 -> System.out.print("J");
+            }
+
+            for (int col = 1; col < 11; col++) {
+                switch (getState(new Coordinates(col, row))) {
+                    case OPEN, ADJACENT -> System.out.print(" ~");
+                    case BATTLESHIP, CARRIER, CRUISER, DESTROYER, SUBMARINE  -> System.out.print(" ~");
+                    case HIT -> System.out.print(" X");
+                    case MISS -> System.out.print(" M");
+                }
+            }
+            System.out.println();
+        }
+    }
+
     public void setupBoard() {
 
         addShip(CARRIER,5);
@@ -79,7 +109,7 @@ public class Battleship {
         }
         //successful placement
         board = boardWithShip.get();//gets the value from optional
-        printBoard();
+        printTrueState();
     }
 
     private Optional<HashMap<Coordinates,State>> tryPlaceShip(State shipType, int shipLength) {
@@ -123,8 +153,9 @@ public class Battleship {
 
     public void play() {
         System.out.println("The game starts!");
-        printBoard();
+        printFoggyState();
         takeShot();
+        printTrueState();
     }
     private void takeShot() {
         Optional<HashMap<Coordinates, State>> boardWithShot = Optional.empty();
@@ -146,7 +177,7 @@ public class Battleship {
             var updatedGame = new Battleship(board);
             updatedGame.updateBoard(missile, result);
             newBoard = Optional.of(updatedGame.board);
-            updatedGame.printBoard();
+            updatedGame.printFoggyState();
             switch (result) {
                 case HIT -> System.out.println("You hit a ship!");
                 case MISS -> System.out.println("You missed!");
