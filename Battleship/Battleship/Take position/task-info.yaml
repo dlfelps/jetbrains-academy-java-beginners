@@ -291,7 +291,7 @@ files:
 - name: src/battleship/Coordinates.java
   visible: true
   learner_created: true
-feedback_link: https://hyperskill.org/projects/125/stages/663/implement#comment
+feedback_link: https://hyperskill.org/learn/step/10594#comment
 status: Solved
 feedback:
   message: Congratulations!

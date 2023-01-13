@@ -2,6 +2,7 @@ package battleship;
 
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static battleship.State.*;
@@ -153,10 +154,30 @@ public class Battleship {
 
     public void play() {
         System.out.println("The game starts!");
-        printFoggyState();
-        takeShot();
-        printTrueState();
+        boolean allSunk = false;
+
+        while (!allSunk){
+            printFoggyState();
+            takeShot();
+            allSunk = checkSunk();
+        }
+
+        System.out.println("You sank the last ship. You won. Congratulations!");
     }
+
+    private boolean checkSunk() {
+        Predicate<State> notCarrier = Predicate.not(Predicate.isEqual(CARRIER));
+        Predicate<State> notBattleship = Predicate.not(Predicate.isEqual(BATTLESHIP));
+        Predicate<State> notSubmarine = Predicate.not(Predicate.isEqual(SUBMARINE));
+        Predicate<State> notCruiser = Predicate.not(Predicate.isEqual(CRUISER));
+        Predicate<State> notDestroyer = Predicate.not(Predicate.isEqual(DESTROYER));
+        return board.values().stream().allMatch(notCarrier
+                .and(notBattleship)
+                .and(notSubmarine)
+                .and(notCruiser)
+                .and(notDestroyer));
+    }
+
     private void takeShot() {
         Optional<HashMap<Coordinates, State>> boardWithShot = Optional.empty();
         while (boardWithShot.isEmpty()) {
