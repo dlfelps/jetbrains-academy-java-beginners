@@ -9,7 +9,8 @@ public enum State {
     OPEN,
     ADJACENT,
     HIT,
-    MISS;
+    MISS,
+    SUNK;
 
     @Override
     public String toString(){
@@ -23,6 +24,7 @@ public enum State {
             case ADJACENT -> "Adjacent";
             case HIT -> "Hit";
             case MISS -> "Miss";
+            case SUNK -> "Sunk";
         };
     }
 }

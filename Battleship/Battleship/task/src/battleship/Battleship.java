@@ -17,6 +17,10 @@ public class Battleship {
 
     private HashMap<Coordinates,State> player1;
     private HashMap<Coordinates,State> player2;
+    private HashMap<Coordinates,List<Coordinates>> ships1;
+    private HashMap<Coordinates,List<Coordinates>> ships2;
+
+
     private Player turn;
 
     private Battleship(Map<Coordinates,State> initalPlayer1, Map<Coordinates,State> initalPlayer2){
@@ -25,6 +29,8 @@ public class Battleship {
         player2 = new HashMap(100);
         player2.putAll(initalPlayer2);
         turn = ONE;
+        ships1 = new HashMap();
+        ships2 = new HashMap();
     }
 
     public static Battleship empty() {
@@ -170,6 +176,7 @@ public class Battleship {
                 var updatedGame = new Battleship(player1, player2);
                 shipSurround.forEach(coord -> updatedGame.updateBoard(turn, coord, ADJACENT));
                 shipSpan.forEach(coord -> updatedGame.updateBoard(turn, coord, shipType));
+                saveShips(turn, shipSpan);
                 newBoard = switch (turn) {
                     case ONE -> Optional.of(updatedGame.player1);
                     case TWO -> Optional.of(updatedGame.player2);
@@ -181,6 +188,17 @@ public class Battleship {
             System.out.println(e.getMessage());
         }
         return newBoard;
+    }
+
+    private void saveShips(Player turn, List<Coordinates> shipSpan) {
+        var playerShip = switch(turn){
+            case ONE -> ships1;
+            case TWO -> ships2;
+        };
+
+        for (Coordinates coord : shipSpan) {
+            playerShip.put(coord, shipSpan);
+        }
     }
 
     public void play() {
@@ -262,7 +280,11 @@ public class Battleship {
                 case ONE -> Optional.of(updatedGame.player1);
                 case TWO -> Optional.of(updatedGame.player2);
             };
+            // no changes needed to board, but if hit, check if it was a sinking shot
+            result = checkSinkingShot(updatedGame, turn,result, missile);
+
             switch (result) {
+                case SUNK -> System.out.println("You sank a ship!");
                 case HIT -> System.out.println("You hit a ship!");
                 case MISS -> System.out.println("You missed!");
             }
@@ -273,10 +295,40 @@ public class Battleship {
         return newBoard;
     }
 
+    private State checkSinkingShot(Battleship updatedGame, Player turn, State result, Coordinates missile) {
+        // checks built in lookup to see if this was the killing blow
+        // MISS -> MISS
+        // HIT -> HIT/SUNK
+        var playerShip = switch(turn){
+            case ONE -> ships1;
+            case TWO -> ships2;
+        };
+
+        State newResult = null;
+        switch(result){
+            case MISS -> newResult = MISS;
+            case HIT -> {
+                // check if it sunk a ship
+                var coords = playerShip.get(missile);
+                var temp = coords.stream()
+                        .map(coord -> updatedGame.getState(turn, coord))
+                        .collect(Collectors.toList());
+                var sunk = temp.stream().allMatch(state -> state == HIT);
+                if (sunk) {
+                    newResult = SUNK;
+                } else {
+                    newResult = HIT;
+                }
+            }
+        }
+        return newResult;
+    }
+
     private State launch(Player turn, Coordinates missile) {
         var newState = switch(getState(turn, missile)) {
             case MISS, OPEN, ADJACENT -> MISS;
             case HIT, CARRIER, CRUISER, DESTROYER, SUBMARINE, BATTLESHIP -> HIT;
+            case SUNK -> SUNK;
         };
         return newState;
     }
